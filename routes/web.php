@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Job;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,25 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-class Job{
-    public static function all(): array
-    {
-        return [
-            [
-                'id' => 1,
-                'title' => 'Developer',
-                'salary' => '2000'
-            ],
-            [
-                'id'=> 2,
-                'title' => 'Programmer',
-                'salary' => '4000'
-            ]
-        ] ;
-    }
-}
-
-
 Route::get('/', function () {
     return view('home');
 });
@@ -41,7 +24,7 @@ Route::get('/jobs', function () {
 });
 
 Route::get('/jobs/{id}', function ($id) {
-    $job = Illuminate\Support\Arr::first(Job::all(), fn($job) => $job['id'] == $id);  
+    $job = Job::find($id);
     return view('job', ['job' => $job]);
 });
 
